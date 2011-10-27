@@ -45,19 +45,23 @@ public class Craps
             case 7:
             case 11:
             win();
+
             break;
             case 2:
             case 3:
             case 12:
             lose();
+
             break;
             default:
             point = sum;
+            message = "Point is equal to " + point;
             break;
         }
     }
 
     public void roll(){
+        credits--;
         if ( point == 0){
             message = "It's not the point roll.";
             return;
@@ -67,8 +71,10 @@ public class Craps
         int sum = getDiceSum();
         if( sum == 7)
             lose();
-        else if ( sum == point)
+        else if ( sum == point){
             win();
+            message = ("The point is " + sum);
+        }
     }
 
     public int getCredits(){
@@ -124,7 +130,7 @@ public class Craps
         System.out.println (GVcraps.getMessage());
         GVcraps.comeOut();
         System.out.println (GVcraps.getMessage());
-        while ( GVcraps.getGameOver() == false){
+        while ( !GVcraps.getGameOver()){
             GVcraps.roll();
             System.out.println (GVcraps.getMessage());
         }

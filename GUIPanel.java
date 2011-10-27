@@ -35,8 +35,7 @@ public class GUIPanel extends JPanel{
         ButtonListener listener = new ButtonListener();
         comeOut.addActionListener(listener);
         roll.addActionListener(listener);
-        credits = new JLabel("Credits " + myGame.getCredits());
-        add(credits);
+
 
         crapsStatus = new JLabel("Taylor's Awesome Craps Game");
         add(crapsStatus);
@@ -48,6 +47,9 @@ public class GUIPanel extends JPanel{
 
         add(die1);
         add(die2);
+
+        credits = new JLabel("Credits " + myGame.getCredits());
+        add(credits);
     }
 
     private class ButtonListener implements ActionListener {
@@ -56,6 +58,9 @@ public class GUIPanel extends JPanel{
                 myGame.comeOut();
             else if (event.getSource() == roll)
                  myGame.roll();
+            credits.setText("Credits " + myGame.getCredits());
+            
+            crapsStatus.setText(myGame.getMessage());
         }
     }
 
