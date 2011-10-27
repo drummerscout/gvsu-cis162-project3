@@ -41,7 +41,7 @@ public class GUIPanel extends JPanel{
         setPreferredSize(new Dimension(600, 500));
         setBackground(Color.orange);
 
-        for(int i = 1; i <= 2; i++)
+        for(int i = 1; i <= Craps.NUM_DICE; i++)
             add(myGame.getDie(i));
         credits = new JLabel("Credits " + myGame.getCredits());
         add(credits);

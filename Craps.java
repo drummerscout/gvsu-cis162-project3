@@ -7,7 +7,7 @@
  */
 public class Craps
 {
-    private static final int NUM_DICE = 2;
+    public static final int NUM_DICE = 3;
     private GVdie[] dice;
     private int credits;
     private int point;
