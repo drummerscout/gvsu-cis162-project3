@@ -7,6 +7,7 @@
  */
 public class Craps
 {
+    private static final int NUM_DICE = 2;
     private GVdie[] dice;
     private int credits;
     private int point;
@@ -14,14 +15,15 @@ public class Craps
     private boolean comeOut;
     public boolean gameOver;
 
+
     public Craps(){
         credits = 10;
         point = 0;
         comeOut = true;
         gameOver = false;
-        dice = new GVdie[2];
-        dice[0] = new GVdie();
-        dice[1] = new GVdie();
+        dice = new GVdie[NUM_DICE];
+        for(int i = 0; i < NUM_DICE; ++i)
+            dice[i] = new GVdie();
         message = "Welcome to the ARCH lab Casino";
     }
 
@@ -31,6 +33,7 @@ public class Craps
         }
 
         if ( !comeOut){
+            message = "It's not the come out.";
             return;
         }
 
@@ -56,6 +59,7 @@ public class Craps
 
     public void roll(){
         if ( point == 0){
+            message = "It's not the point roll.";
             return;
         }
         for(GVdie die : dice)
@@ -83,7 +87,7 @@ public class Craps
 
     public GVdie getDie( int num){
         num--; // This converts it to zero index
-        if ( num > 0 && num < dice.length)
+        if ( num >= 0 && num < dice.length)
             return dice[num];
         return null;
     }

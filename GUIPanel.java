@@ -1,9 +1,10 @@
 
 /**
- * Write a description of class Jcraps here.
+ * This is the GUI that will display the dice and buttons.  
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * 
+ * @Taylor Countryman
+ * @October 26, 2011
  */
 
 import java.awt.*;
@@ -16,7 +17,7 @@ public class GUIPanel extends JPanel{
     private JButton roll;
     /**This creates the two status messages*/
     private JLabel crapsStatus;
-    private JLabel score;
+    private JLabel credits;
     /**this creates the two dice that will be shown*/
     private GVdie die1;
     private GVdie die2;
@@ -34,9 +35,11 @@ public class GUIPanel extends JPanel{
         ButtonListener listener = new ButtonListener();
         comeOut.addActionListener(listener);
         roll.addActionListener(listener);
+        credits = new JLabel("Credits " + myGame.getCredits());
+        add(credits);
 
         crapsStatus = new JLabel("Taylor's Awesome Craps Game");
-
+        add(crapsStatus);
         add(comeOut);
         add(roll);
 
@@ -49,21 +52,16 @@ public class GUIPanel extends JPanel{
 
     private class ButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            if(event.getSource() == comeOut) {
+            if (event.getSource() == comeOut)
                 myGame.comeOut();
-                crapsStatus.setText(myGame.getMessage());
-                if(event.getSource() == roll) {
-                    myGame.roll();
-                    crapsStatus.setText(myGame.getMessage());
-                }
-            }
+            else if (event.getSource() == roll)
+                 myGame.roll();
         }
     }
 
-    
     public static void main (String [] args){
         JFrame frame = new JFrame ("Taylor's Crapy Game");
-        frame.setDefaultCloseOperation(JFarem.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(new GUIPanel());
         frame.pack();
         frame.setVisible(true);

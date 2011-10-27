@@ -1,0 +1,5 @@
+# Compiled Java class files
+*.class
+
+# Microsoft Word autosaves
+~$*
