@@ -19,15 +19,11 @@ public class GUIPanel extends JPanel{
     private JLabel crapsStatus;
     private JLabel credits;
     /**this creates the two dice that will be shown*/
-    private GVdie die1;
-    private GVdie die2;
     private Craps myGame;
 
     public GUIPanel() {
 
         myGame = new Craps();
-        die1 = myGame.getDie(1);
-        die2 = myGame.getDie(2);
 
         comeOut = new JButton("Come Out");
         roll = new JButton("Roll");
@@ -45,9 +41,8 @@ public class GUIPanel extends JPanel{
         setPreferredSize(new Dimension(600, 500));
         setBackground(Color.orange);
 
-        add(die1);
-        add(die2);
-
+        for(int i = 1; i <= 2; i++)
+            add(myGame.getDie(i));
         credits = new JLabel("Credits " + myGame.getCredits());
         add(credits);
     }
