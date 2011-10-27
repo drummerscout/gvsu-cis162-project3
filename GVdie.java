@@ -14,7 +14,7 @@ die1.roll( );
 int result = die1.getValue(); 
 </code></pre></blockquote>
 <p> 
-@author Scott Grissom
+@author Scott Grissom, modified by Sean Fisk
 @version 1.4 October 10, 2006
 *****************************************************************/
 public class GVdie extends JPanel implements MouseListener, Comparable{
@@ -40,11 +40,11 @@ private int right;
 private int middle;
 
 /** delay for animation */
-private int DELAY;
-
+// private int DELAY; // Unnecessary, stored by timer
+	
 /** color of the dice when held */
 private Color HELD_COLOR = Color.pink;
-
+	
 /** default color of dice */
 private Color BACKGROUND = Color.white;
 
@@ -84,9 +84,8 @@ setBorder(compound);
 
 // set default values
 displayValue = myValue = (int) (Math.random()*6)+1;
-setDelay(250);
 setNumRolls(6);
-myTimer = new javax.swing.Timer(DELAY, new Animator());
+myTimer = new javax.swing.Timer(250, new Animator());
 addMouseListener(this);
 }
 
@@ -155,9 +154,8 @@ Default value is 250.
 @param msec milliseconds to delay
 *****************************************************************/
 public void setDelay (int msec){
-   DELAY = 0;
    if (msec > 0)
-       DELAY = msec;
+		 myTimer.setDelay(msec);
 }
 
 /*****************************************************************
