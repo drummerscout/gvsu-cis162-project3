@@ -4,31 +4,33 @@
  * 
  * @Taylor Countryman
  * @October
-*/
+ */
 public class Craps
 {
     private GVdie[] dice;
-    private int credits = 0;
-    private int point = 0;
+    private int credits;
+    private int point;
     private String message ;
     private boolean comeOut;
-    
+    public boolean gameOver;
 
     public Craps(){
         credits = 10;
+        point = 0;
         comeOut = true;
+        gameOver = false;
         dice = new GVdie[2];
+        dice[0] = new GVdie();
+        dice[1] = new GVdie();
         message = "Welcome to the ARCH lab Casino";
     }
 
     public void comeOut(){
         if(credits <= 0 ){
-            message = "You don't have any money.";
             return;
         }
 
         if ( !comeOut){
-            message = "It's not the come out.";
             return;
         }
 
@@ -39,22 +41,21 @@ public class Craps
         switch (sum){
             case 7:
             case 11:
-                win();
-                break;
+            win();
+            break;
             case 2:
             case 3:
             case 12:
-                lose();
-                break;
+            lose();
+            break;
             default:
-                point = sum;
-                break;
+            point = sum;
+            break;
         }
     }
 
     public void roll(){
         if ( point == 0){
-            message = "It's not the point roll.";
             return;
         }
         for(GVdie die : dice)
@@ -77,7 +78,7 @@ public class Craps
     public void setCredits( int credits ){
         if ( credits > 0)
             this.credits = credits;
-    
+
     }
 
     public GVdie getDie( int num){
@@ -107,6 +108,22 @@ public class Craps
     private void lose(){
         credits--;
         message = "You're a loser.";
+        gameOver = true;
     }
-}
-            
+
+    private boolean getGameOver(){
+        return gameOver;
+    }
+
+    public static void main (String [] args){
+        Craps GVcraps = new Craps();
+        System.out.println (GVcraps.getMessage());
+        GVcraps.comeOut();
+        System.out.println (GVcraps.getMessage());
+        while ( GVcraps.getGameOver() == false){
+            GVcraps.roll();
+            System.out.println (GVcraps.getMessage());
+        }
+        System.out.println ( "You ended with " + GVcraps.getCredits());
+    }
+}       
