@@ -13,17 +13,18 @@ public class Craps
     private int point;
     private String message ;
     private boolean comeOut;
-    public boolean gameOver;
-
+    private int numGamesPlayed;
 
     public Craps(){
         credits = 10;
+        numGamesPlayed = 0;
         point = 0;
         comeOut = true;
-        gameOver = false;
         dice = new GVdie[NUM_DICE];
-        for(int i = 0; i < NUM_DICE; ++i)
+        for(int i = 0; i < NUM_DICE; ++i){
             dice[i] = new GVdie();
+            dice[i].setDelay(25);
+        }
         message = "Welcome to the ARCH lab Casino";
     }
 
@@ -31,28 +32,25 @@ public class Craps
         if(credits <= 0 ){
             return;
         }
-
         if ( !comeOut){
             message = "It's not the come out.";
             return;
         }
+        comeOut = false;
 
-        roll();
-
-        int sum = getDiceSum();
-
+        int sum = rollAndComputeSum();
         switch (sum){
             case 7:
             case 11:
             win();
-
             break;
+
             case 2:
             case 3:
             case 12:
             lose();
-
             break;
+
             default:
             point = sum;
             message = "Point is equal to " + point;
@@ -61,19 +59,21 @@ public class Craps
     }
 
     public void roll(){
-        credits--;
+        if (comeOut){
+            message = "It's not time to roll.";            
+            return;
+        }
         if ( point == 0){
             message = "It's not the point roll.";
             return;
         }
-        for(GVdie die : dice)
-            die.roll();
-        int sum = getDiceSum();
+        int sum = rollAndComputeSum();
         if( sum == 7)
             lose();
         else if ( sum == point){
+            message = ("The point is " + sum);            
             win();
-            message = ("The point is " + sum);
+
         }
     }
 
@@ -102,38 +102,44 @@ public class Craps
         return message;
     }
 
-    private int getDiceSum(){
-        int sum = 0;
-
-        for(GVdie die : dice)
+    private int rollAndComputeSum(){
+        int sum = 0;        
+        for(GVdie die : dice){
+            die.roll();
             sum += die.getValue();
+        }
         return sum;
     }
 
     private void win(){
         credits++;
         message = "You're a winner!";
+        comeOut = true;
+        numGamesPlayed++;
     }
 
     private void lose(){
         credits--;
         message = "You're a loser.";
-        gameOver = true;
+        comeOut = true;
+        numGamesPlayed++;
     }
 
-    private boolean getGameOver(){
-        return gameOver;
+    public int getNumGamesPlayed(){
+        return numGamesPlayed;      
     }
+
 
     public static void main (String [] args){
-        Craps GVcraps = new Craps();
-        System.out.println (GVcraps.getMessage());
-        GVcraps.comeOut();
-        System.out.println (GVcraps.getMessage());
-        while ( !GVcraps.getGameOver()){
-            GVcraps.roll();
-            System.out.println (GVcraps.getMessage());
+        Craps craps = new Craps();
+        System.out.println (craps.getMessage());
+        craps.comeOut();
+        System.out.println (craps.getMessage());
+         while (craps.getNumGamesPlayed() < 1 ){
+         craps.roll();
+        System.out.println (craps.getMessage());
         }
-        System.out.println ( "You ended with " + GVcraps.getCredits());
+        System.out.println ( "You ended with " + 
+            craps.getCredits());
     }
 }       

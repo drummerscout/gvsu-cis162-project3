@@ -37,7 +37,7 @@ public class GUIPanel extends JPanel{
         roll.addActionListener(listener);
 
 
-        crapsStatus = new JLabel("Taylor's Awesome Craps Game");
+        crapsStatus = new JLabel("Welcome to the ARCH lab Casino");
         add(crapsStatus);
         add(comeOut);
         add(roll);
